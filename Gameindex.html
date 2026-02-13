@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AimLab Lite</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='Gamestyle.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <h1>AimLab Lite</h1>
+      <p>Quick sensitivity math + conversions for FPS gamers</p>
+    </header>
+
+    <main class="grid">
+
+      <!-- eDPI -->
+      <section class="card">
+        <h2>eDPI Calculator</h2>
+        <form method="POST">
+          <input type="hidden" name="tool" value="edpi" />
+          <label>DPI</label>
+          <input type="number" name="dpi" value="800" min="1" required>
+
+          <label>Sensitivity</label>
+          <input type="number" name="sens" value="0.35" step="0.001" min="0" required>
+
+          <button type="submit">Calculate eDPI</button>
+        </form>
+      </section>
+
+      <!-- 360 distance -->
+      <section class="card">
+        <h2>360° Distance</h2>
+        <form method="POST">
+          <input type="hidden" name="tool" value="cm360" />
+          <label>DPI</label>
+          <input type="number" name="dpi" value="800" min="1" required>
+
+          <label>Sensitivity</label>
+          <input type="number" name="sens" value="1.5" step="0.001" min="0" required>
+
+          <label>Yaw/Scale (game-dependent)</label>
+          <input type="number" name="yaw" value="0.022" step="0.0001" min="0" required>
+          <small class="hint">Tip: 0.022 is a common baseline (CS-style).</small>
+
+          <button type="submit">Calculate 360°</button>
+        </form>
+      </section>
+
+      <!-- converter -->
+      <section class="card">
+        <h2>Game Sens Converter (v1)</h2>
+        <form method="POST">
+          <input type="hidden" name="tool" value="convert" />
+
+          <label>From</label>
+          <select name="source_game" required>
+            <option>Valorant</option>
+            <option>CS2</option>
+            <option>Overwatch</option>
+            <option>Apex</option>
+            <option>Fortnite</option>
+          </select>
+
+          <label>To</label>
+          <select name="target_game" required>
+            <option>CS2</option>
+            <option>Valorant</option>
+            <option>Overwatch</option>
+            <option>Apex</option>
+            <option>Fortnite</option>
+          </select>
+
+          <label>Source Sensitivity</label>
+          <input type="number" name="source_sens" value="0.35" step="0.0001" min="0" required>
+
+          <button type="submit">Convert</button>
+        </form>
+
+        <p class="hint">This is a solid starter converter. You can expand it with real per-game FOV + zoom scaling later.</p>
+      </section>
+
+      <!-- results -->
+      <section class="card result">
+        <h2>Results</h2>
+
+        {% if result %}
+          <div class="result-box">
+            <h3>{{ result.title }}</h3>
+            <ul>
+              {% for line in result.lines %}
+                <li>{{ line }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          <p class="muted">Run any tool and your results will show up here.</p>
+        {% endif %}
+
+        <div class="footer-note">
+          <span>Next upgrades:</span> profile saving, controller curves, FOV matching, upload gameplay for aim feedback.
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
