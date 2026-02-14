@@ -15,3 +15,4 @@ A gamer-focused web app that calculates eDPI, estimates 360° distance, and conv
 ```bash
 pip install -r requirements.txt
 python app.py
+![AimLab Lite Screenshot](AimLab-Lite.png)
